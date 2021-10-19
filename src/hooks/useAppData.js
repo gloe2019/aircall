@@ -12,20 +12,21 @@ const useAppData = () => {
 
   //all app functions/ API interactions should be here
 
-  const archiveCall = (callObj) => {
+  const archiveCall = (id) => {
+    const callObj = activities.find((activity) => activity.id === id);
     const setArchived = {
       is_archived: true,
     };
-    if (callObj.is_archived === "true") {
-      setArchived.is_archived = "false";
+    if (callObj.is_archived === true) {
+      setArchived.is_archived = false;
     }
-    const updatedCall = Object.assign(callObj, setArchived);
 
-    console.log("Call updated...", updatedCall);
-
-    // return axios.post(
-    //   `https://aircall-job.herokuapp.com/activities/${updatedCall.id}`
-    // );
+    return axios
+      .post(
+        `https://aircall-job.herokuapp.com/activities/${callObj.id}`,
+        setArchived
+      )
+      .then((res) => console.log("Successfully archived call obj"));
   };
 
   return { activities, archiveCall };
