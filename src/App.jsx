@@ -1,25 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route, Link , useLocation} from 'react-router-dom';
 
 import Header from './Header.jsx';
 import Footer from './Footer.jsx'
 import ActivityFeed from './components/ActivityFeed.jsx';
+import CallHistory from './CallHistory.jsx';
+import Archive from './Archive.jsx';
 
-import useAppData from './hooks/useAppData.js';
 
 const App = () => {
-  const { activities, archiveCall} = useAppData();
+  
   return (
+    <Router >
     <div className='container'>
-      <Header/>
-      <div className="container-view">
-        <ActivityFeed activities={activities} archiveCall={archiveCall}/>
-      </div>
+      <Header />
+      <Switch >
+        <Route exact path="/history" >
+          <CallHistory />
+        </Route>
+        <Route exact path="/archive">
+          <Archive />
+        </Route>
+      </Switch>
       <Footer />
     </div>
+</Router>
   );
 };
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+
+  </React.StrictMode>
+  , document.getElementById('app'));
 
 export default App;
