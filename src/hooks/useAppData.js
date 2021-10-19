@@ -20,13 +20,17 @@ const useAppData = () => {
     if (callObj.is_archived === true) {
       setArchived.is_archived = false;
     }
+    const updatedCall = Object.assign(callObj, setArchived);
 
     return axios
       .post(
         `https://aircall-job.herokuapp.com/activities/${callObj.id}`,
         setArchived
       )
-      .then((res) => console.log("Successfully archived call obj"));
+      .then((res) => {
+        console.log("Call was successfully archived/unarchived");
+        setActivities([...activities, updatedCall]);
+      });
   };
 
   return { activities, archiveCall };
