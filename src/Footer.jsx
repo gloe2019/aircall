@@ -8,15 +8,16 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [ value, setValue ] = useState(0);
+
   return (
     <footer>
-      <BottomNavigation
+      <BottomNavigation 
         value={value}
         onChange={(event, newValue) => setValue(newValue)}
         showLabels
       >
-        <BottomNavigationAction label="Call History" value="/history" icon={<History />} component={Link} to="/history"/>
-        <BottomNavigationAction label="Archive" icon={ <Archive /> } value="/archive" component={Link} to="/archive"/>
+        <BottomNavigationAction label="Call History" value="/" icon={<History />} component={Link} to="/"/>
+        <BottomNavigationAction label="Archived" icon={ <Archive /> } value="/archive" component={Link} to="/archive"/>
       </BottomNavigation>
     </footer>
   );

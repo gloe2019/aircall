@@ -16,7 +16,7 @@ const App = () => {
     <div className='container'>
       <Header />
       <Switch >
-        <Route exact path="/history" >
+        <Route exact path="/" >
           <CallHistory />
         </Route>
         <Route exact path="/archive">
