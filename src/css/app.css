@@ -13,13 +13,24 @@
   width: 376px;
   height: 666px;
   z-index: 100;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: white;
   border-radius: 3px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, .9);
+  overflow: scroll;
 }
 
 #app .container-view {
   padding: 20px;
+  flex: 1 1 auto;
+}
+
+#app .container-view-heading {
+  text-align: center;
+  font: caption;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
