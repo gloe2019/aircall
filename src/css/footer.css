@@ -1,6 +1,7 @@
 footer {
   height: 40px;
-  margin: 0 auto;
+  margin: 2vh;
+  padding: 2vh;
   text-align: center;
   box-shadow: 0 1px 0 rgba(241, 22, 22, 0.1);
 }
