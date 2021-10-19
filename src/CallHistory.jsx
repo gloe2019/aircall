@@ -9,8 +9,9 @@ import useAppData from './hooks/useAppData.js';
 const CallHistory = () => {
   const { activities, archiveCall} = useAppData();
   return (
-      <div className="container-view">
-        <ActivityFeed activities={activities} archiveCall={archiveCall}/>
+    <div className="container-view">
+      <div className="container-view-heading"> Call History </div>
+        <ActivityFeed type="unarchived" activities={activities} archiveCall={archiveCall}/>
       </div>
   );
 };
