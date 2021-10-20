@@ -9,21 +9,29 @@ import Voicemail from '@material-ui/icons/VoicemailRounded'
 import InfoOutlined  from '@material-ui/icons/InfoOutlined'
 import ArchiveTwoTone from '@material-ui/icons/ArchiveTwoTone'
 import UnarchiveTwoTone from '@material-ui/icons/UnarchiveTwoTone';
+import ExpandMore  from '@material-ui/icons/ExpandMore'
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+import Box from '@material-ui/core/Box'
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles'
-
+import CardHeader  from '@material-ui/core/CardHeader'
+import Avatar  from '@material-ui/core/Avatar'
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: '100%',
   },
-  grid: {
-    textAlign: 'center'
+  header: {
+    textAlign: 'center',
+    display: 'flex'
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   media: {
     height: 0,
@@ -52,25 +60,25 @@ const Activity = (props) => {
     setExpanded(!expanded);
   };
 
-  const formattedDate = moment(created_at).format('MMM DD YYYY')
+  const formattedDate = moment(created_at).format('MMM Do YYYY')
   const callTime = moment(created_at).format('LT')
   
 
   return (
-    <Card className={classes.root}>
-      <CardActions>
-      <IconButton aria-label="call icon" disabled={true}>
-      { call_type === 'answered' && <CallRounded style={{ color: blue[500]}} />}
-        { call_type === 'missed' && <PhoneMissedRoundedIcon style={{ color: red[500]}} /> }
-        {call_type === 'voicemail' && <Voicemail style={{color: yellow[500]}}/> }
-        </IconButton>
-        <Typography>{direction === 'outbound' ? <p>{to}</p> : <p>{from}</p>}</Typography>
-        <Typography>{callTime}</Typography>
-        <IconButton disableRipple={true}>
-          {is_archived === false && <ArchiveTwoTone onClick={() => archiveCall(id)}/>}
-          {is_archived === true && <UnarchiveTwoTone onClick={() => archiveCall(id)}/>}
-        </IconButton>
-        <IconButton
+    <Card className={classes.root} elevation={0}>
+      <CardHeader className={classes.header}
+        avatar={
+         <IconButton aria-label="call icon" disabled={true}>
+          { call_type === 'answered' && <CallRounded style={{ color: blue[500]}} />}
+            { call_type === 'missed' && <PhoneMissedRoundedIcon style={{ color: red[500]}} /> }
+            {call_type === 'voicemail' && <Voicemail style={{color: yellow[500]}}/> }
+            </IconButton>
+        }
+        component='span'
+        title={direction === 'outbound' ? <p>{to}</p> : <p>{from}</p>}
+        subheader={callTime}
+        action={
+          <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
@@ -78,15 +86,21 @@ const Activity = (props) => {
           aria-expanded={expanded}
           aria-label="call details"
         >
-          <InfoOutlined />
+          <ExpandMore />
         </IconButton>
-      </CardActions>
+        }
+      >
+      </CardHeader>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography >Date: {formattedDate}
-          </Typography>
-          <Typography >Direction: {direction}</Typography>
-          <Typography >Duration: {duration}s</Typography>
+        <CardContent className={classes.content}>
+          <Box>
+          <Typography >{call_type} on {formattedDate}, {duration}s</Typography>
+          <Typography gutterBottom paragraph>Via: {via}</Typography>
+          </Box>
+          <IconButton>
+          {is_archived === false && <ArchiveTwoTone onClick={() => archiveCall(id)}/>}
+          {is_archived === true && <UnarchiveTwoTone onClick={() => archiveCall(id)}/>}
+        </IconButton>
         </CardContent>
       </Collapse>
     </Card>
