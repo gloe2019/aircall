@@ -51,7 +51,6 @@ const useStyles = makeStyles(theme => ({
 
 //Make onClick function that displays call details!!!
 const Activity = (props) => {
-  console.log('...', props)
   const { archiveCall, id, call_type, created_at, direction, duration, from, is_archived, to, via } = props
   const classes = useStyles();
   const [ expanded, setExpanded ] = React.useState(false);
@@ -94,12 +93,15 @@ const Activity = (props) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent className={classes.content}>
           <Box>
-          <Typography >{call_type} on {formattedDate}, {duration}s</Typography>
-          <Typography gutterBottom paragraph>Via: {via}</Typography>
+          <Typography >{call_type} on {formattedDate}</Typography>
+          <Typography>From: {from} </Typography>
+            {to && <Typography>To: {to} </Typography>}
+          <Typography>Via: {via}</Typography>
+          <Typography>Call duration: {duration}s </Typography>
           </Box>
-          <IconButton>
-          {is_archived === false && <ArchiveTwoTone onClick={() => archiveCall(id)}/>}
-          {is_archived === true && <UnarchiveTwoTone onClick={() => archiveCall(id)}/>}
+          <IconButton onClick={() => archiveCall(id)}>
+          {is_archived === false && <ArchiveTwoTone />}
+          {is_archived === true && <UnarchiveTwoTone />}
         </IconButton>
         </CardContent>
       </Collapse>
